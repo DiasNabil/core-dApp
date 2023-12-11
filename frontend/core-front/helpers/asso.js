@@ -8,6 +8,7 @@ export const assos = [
         website: 'https://www.helpersfoundation.org/about-us/', 
         id: 1,
         address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
+        encodedPrivateKey:'',
         mail: 'test1@test.com',
         password: '080697'
     },
@@ -20,6 +21,7 @@ export const assos = [
         website: 'https://www.commonsstack.org/', 
         id: 2,
         address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
+        encodedPrivateKey:'',
         mail: 'test1@test.com',
         password: '080697'
     },
@@ -32,6 +34,7 @@ export const assos = [
         website: 'https://form.jotform.com/223058111377047', 
         id: 3,
         address: '0x57164f80342c2eFE58B42196CcFb37C5eD920679',
+        encodedPrivateKey:'',
         mail: 'test1@test.com',
         password: '080697'
     }
