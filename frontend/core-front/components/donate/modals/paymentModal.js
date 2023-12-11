@@ -86,8 +86,8 @@ export default function PaymentModal({isOpen, onClose, data}){
               status: "info",
               duration: 'null'
             })
-            quote && console.log('swap effectuée', amount , typeof(amount))
-            console.log('envoi de la transaction...', amount)
+            quote && console.log('swap effectuée', quote.data)
+            console.log('envoi de la transaction...')
 
             const {hash: transferData} = await writeContract({
                 address: tokens[0].contract,
@@ -117,37 +117,32 @@ export default function PaymentModal({isOpen, onClose, data}){
                 to: nftAddress,
                 data: callData
               })
+
+              const whitelisted = waitForTransaction({hash: request})
               request.nonce += Math.trunc((Math.random() * 10))
               const signature = await ownerClient.signTransaction(request)
               const hash = await ownerClient.sendRawTransaction({ serializedTransaction: signature })
               
               
-              if(hash){
+              if(hash && whitelisted){
                 console.log('transaction effectuée ! envoi du nft en cours ...')
 
-                  const {hash: mint} = writeContract({
+                  const {hash: mint} = await writeContract({
                     address: nftAddress,
                     abi: nftABI,
                     functionName: 'mint',
                     args: [URI]
                   })
-
-                  console.log('mint du nft...')
+                  
                   if(mint){
-                    console.log(mint)
+                    console.log('mint du nft...')
+                    
                     console.log('nft minter !', mint)
                     setLoading(false)
                     onClose()
                   }
-
-
               }
-
-
-
-            } 
-
-              
+            }       
         }
 
       }catch(e) {
