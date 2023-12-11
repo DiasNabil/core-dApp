@@ -147,12 +147,6 @@ export default function PaymentModal({isOpen, onClose, data}){
       }
     }
 
-    const ownerClient = createWalletClient({
-      account: privateKeyToAccount(faucetPrivateKey),
-      chain: sepolia,
-      transport: typeof window !== undefined &&  custom(window.ethereum)
-  
-    })
 
 
     return (
