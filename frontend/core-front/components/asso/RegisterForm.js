@@ -7,7 +7,7 @@ import { Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel,
 import { encryptData } from "@/helpers/encrypt";
 import { client } from "@/helpers/walletClient";
 import { parseEther,  } from "viem";
-import { faucetPrivateKey } from "@/helpers/coreContract";
+import { faucetPrivateKey } from "@/helpers/faucet";
 import CoreIcon from "@/app/coreIcon";
 
 export default function RegisterForm() {
