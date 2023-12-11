@@ -2,7 +2,6 @@
 
 import { URI } from "@/helpers/URI";
 import { nftABI, nftAddress } from "@/helpers/coreNFTContract";
-import { faucetAddress, faucetPrivateKey } from "@/helpers/faucet";
 import { tokens } from "@/helpers/tokens";
 import { ownerClient, } from "@/helpers/walletClient";
 import { Button } from "@chakra-ui/button";

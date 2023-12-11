@@ -1,4 +1,4 @@
-import { Box, Button, Center, HStack, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Button, Center, HStack, Heading, Image, Text} from "@chakra-ui/react";
 import Link from "next/link";
 
 export default function HomeAsso() {

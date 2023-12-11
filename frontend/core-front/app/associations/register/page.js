@@ -1,4 +1,4 @@
-import { Center , Heading } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import RegisterForm from "../../../components/asso/RegisterForm";
 
 export default function Register(){

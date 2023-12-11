@@ -1,5 +1,5 @@
 import LoginForm from "@/components/asso/loginForm";
-import { Center, Heading } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
 

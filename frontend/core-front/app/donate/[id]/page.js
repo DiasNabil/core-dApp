@@ -1,15 +1,12 @@
 'use client'
 
-import ConnectModal from "@/components/donate/modals/ConnectModal"
 import { assos } from "@/helpers/asso"
 import { Avatar } from "@chakra-ui/avatar"
 import { Button } from "@chakra-ui/button"
 import { Card, CardBody, CardFooter, CardHeader } from "@chakra-ui/card"
-import { useDisclosure } from "@chakra-ui/hooks"
 import { Center, Flex, Grid, GridItem, Heading, Stack, Text} from "@chakra-ui/layout"
 import {useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
-import { useAccount } from "wagmi"
 
 export default function pageAssociation() {
     const params = useParams()

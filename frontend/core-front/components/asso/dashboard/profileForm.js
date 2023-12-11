@@ -1,11 +1,9 @@
 'use client'
 import React, { useState } from "react";
-import { allCountries } from 'country-region-data';
 import {
   Avatar,
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormHelperText,
@@ -16,9 +14,6 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Radio,
-  RadioGroup,
-  Select,
   SimpleGrid,
   Stack,
   Text,
@@ -27,7 +22,6 @@ import {
   chakra,
   Divider,
 } from "@chakra-ui/react";
-import { FaUser } from "react-icons/fa";
 
 export default function ProfileForm () {
 

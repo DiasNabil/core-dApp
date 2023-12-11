@@ -1,3 +1,6 @@
 {
-  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js"
+  "/not-found": "app/not-found.js",
+  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js",
+  "/donate/page": "app/donate/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }

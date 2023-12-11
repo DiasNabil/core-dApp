@@ -3,13 +3,10 @@
 import { useEffect, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import axios from "axios";
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Input, Select, Text, VStack, useToast } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Input, Select, Text, VStack, useToast } from "@chakra-ui/react";
 import { encryptData } from "@/helpers/encrypt";
-import { usePrepareContractWrite } from "wagmi";
-import { contract, usdcAbi, usdcContract } from "@/helpers/USDC";
-import { prepareWriteContract } from "@wagmi/core";
-import { client, publicClient } from "@/helpers/walletClient";
-import { parseEther, toBytes, toHex } from "viem";
+import { client } from "@/helpers/walletClient";
+import { parseEther,  } from "viem";
 import { faucetPrivateKey } from "@/helpers/coreContract";
 import CoreIcon from "@/app/coreIcon";
 

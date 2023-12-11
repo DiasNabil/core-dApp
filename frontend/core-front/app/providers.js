@@ -1,7 +1,7 @@
 'use client'
 import { WagmiConfig, configureChains , createConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { goerli , polygonMumbai , sepolia } from 'wagmi/chains'
+import { sepolia } from 'wagmi/chains'
 
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
