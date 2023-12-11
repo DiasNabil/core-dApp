@@ -3,5 +3,6 @@
   "/donate/page": "app/donate/page.js",
   "/page": "app/page.js",
   "/associations/register/page": "app/associations/register/page.js",
-  "/donate/[id]/page": "app/donate/[id]/page.js"
+  "/donate/[id]/page": "app/donate/[id]/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
