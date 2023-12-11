@@ -3,14 +3,14 @@
 import { URI } from "@/helpers/URI";
 import { nftABI, nftAddress } from "@/helpers/coreNFTContract";
 import { tokens } from "@/helpers/tokens";
-import { ownerClient } from "@/helpers/walletClient";
 import { Button } from "@chakra-ui/button";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import { useToast } from "@chakra-ui/toast";
-import { getAccount,  sendTransaction, waitForTransaction, writeContract } from "@wagmi/core";
+import { getAccount,  sendTransaction, sepolia, waitForTransaction, writeContract } from "@wagmi/core";
 import axios from "axios";
 import { useRef, useState } from "react";
-import { encodeFunctionData} from "viem";
+import { createWalletClient, encodeFunctionData} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
 
 export default function PaymentModal({isOpen, onClose, data}){
 
@@ -18,7 +18,6 @@ export default function PaymentModal({isOpen, onClose, data}){
     const toastRef = useRef()
     const account = getAccount()
     const [isLoading, setLoading] = useState(false)
-    console.log(ownerClient)
     async function handleTx(){
       
       
@@ -147,6 +146,13 @@ export default function PaymentModal({isOpen, onClose, data}){
       return console.error(e)
       }
     }
+
+    const ownerClient = createWalletClient({
+      account: privateKeyToAccount(faucetPrivateKey),
+      chain: sepolia,
+      transport: typeof window !== undefined &&  custom(window.ethereum)
+  
+    })
 
 
     return (
