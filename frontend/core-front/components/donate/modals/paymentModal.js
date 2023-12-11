@@ -3,13 +3,13 @@
 import { URI } from "@/helpers/URI";
 import { nftABI, nftAddress } from "@/helpers/coreNFTContract";
 import { tokens } from "@/helpers/tokens";
-import { ownerClient, } from "@/helpers/walletClient";
+import { ownerClient,} from "@/helpers/walletClient";
 import { Button } from "@chakra-ui/button";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import { useToast } from "@chakra-ui/toast";
 import { getAccount,  sendTransaction, waitForTransaction, writeContract } from "@wagmi/core";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { encodeFunctionData} from "viem";
 
 
@@ -21,6 +21,10 @@ export default function PaymentModal({isOpen, onClose, data}){
     const toastRef = useRef()
     const account = getAccount()
     const [isLoading, setLoading] = useState(false)
+    
+    useEffect(()=>{
+      const ownerClient = ownerClient
+    },[])
 
     async function handleTx(){
       

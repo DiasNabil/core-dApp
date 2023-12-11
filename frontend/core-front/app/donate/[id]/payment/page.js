@@ -19,8 +19,7 @@ import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/tabl
 import { fetchBalance } from "@wagmi/core";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { readContracts, useAccount, useBalance } from "wagmi";
-import { RxAvatar } from "react-icons/rx";
+import { useAccount } from "wagmi";
 
 
 export default function Payment(){
@@ -36,9 +35,8 @@ export default function Payment(){
     const {onOpen: onConnectOpen, isOpen: isConnectOpen, onClose: onConnectClose} = useDisclosure()
     const {onOpen: onPaymentOpen, isOpen: isPaymentOpen, onClose: onPaymentClose} = useDisclosure()
 
-    const {address,status, isConnected, isDisconnected} = useAccount()
+    const {address, isConnected, isDisconnected} = useAccount()
     const toast = useToast()
-    const toastRef = useRef()
 
     useEffect(()=>{
 
