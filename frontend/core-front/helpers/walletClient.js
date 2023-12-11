@@ -16,7 +16,7 @@ export const client = createWalletClient({
   export const ownerClient = createWalletClient({
       account: privateKeyToAccount(faucetPrivateKey),
       chain: sepolia,
-      transport: custom(window.ethereum)
+      transport: typeof window !== undefined &&  custom(window.ethereum)
   
     })
   
