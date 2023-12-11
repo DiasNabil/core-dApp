@@ -9,8 +9,8 @@ import { useToast } from "@chakra-ui/toast";
 import { getAccount,  sendTransaction, sepolia, waitForTransaction, writeContract } from "@wagmi/core";
 import axios from "axios";
 import { useRef, useState } from "react";
-import { createWalletClient, encodeFunctionData} from "viem";
-import { privateKeyToAccount } from "viem/accounts";
+import { encodeFunctionData} from "viem";
+import { ownerClient } from "@/helpers/walletClient";
 
 export default function PaymentModal({isOpen, onClose, data}){
 
