@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require('@nomicfoundation/hardhat-viem')
 require('dotenv').config()
 // /!\ 
 require("@nomicfoundation/hardhat-verify");
@@ -17,7 +18,7 @@ module.exports = {
   networks:{
     sepolia:{
       url: SEPOLIA_RPC_URL,
-      accounts: [owner]
+      accounts: [owner, user1, user2, user3]
     }
   },
   etherscan: {

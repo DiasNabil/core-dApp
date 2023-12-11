@@ -34,7 +34,7 @@ export default function LoginForm() {
             }
             
             console.log('identifiant correct, redirection vers le dashboard...')
-            router.push(`/associations/dashboard/${auth.id}`)
+            router.push(`/associations/dashboard/${assos.indexOf(auth)}`)
         } catch(err){
                 console.error("l'email ou le mot de passe que vous avez renseiger est incorrect, veuillez réessayer.")
                 toast({

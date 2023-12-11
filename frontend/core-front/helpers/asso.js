@@ -24,7 +24,7 @@ export const assos = [
         id: 2,
         address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
         encodedPrivateKey:encryptData('0xe4cb8ecf8282b61565398d1fa4300020facbb1e79bf7c4530a00fe30dba2d4fb'),
-        mail: 'test1@test.com',
+        mail: 'test2@test.com',
         password: '080697'
     },
     {
@@ -37,7 +37,7 @@ export const assos = [
         id: 3,
         address: '0x57164f80342c2eFE58B42196CcFb37C5eD920679',
         encodedPrivateKey:encryptData('0xbc4c38e5e0b0c7b1ba90f3b7e4f8570f577a7d3c01ed3d431cee537366a06283'),
-        mail: 'test1@test.com',
+        mail: 'test3@test.com',
         password: '080697'
     }
 ]

@@ -2,7 +2,6 @@
 
 
 import { Box, Button, Card, CardBody, CardHeader, HStack, Heading, Icon, SimpleGrid, Text, useDisclosure } from "@chakra-ui/react"
-import { privateKeyToAccount } from "viem/accounts"
 import { useBalance, useContractRead, useContractWrite } from "wagmi"
 import { AiFillLock } from "react-icons/ai";
 import { BsClockFill } from "react-icons/bs";
@@ -14,6 +13,8 @@ import ToWithdrawModal from "./modals/toWithdrawModal";
 import { userClient } from "@/helpers/walletClient";
 import { tokens } from "@/helpers/tokens";
 import { coreABI, coreAddress } from "@/helpers/coreContract";
+import { reactStrictMode } from "@/next.config";
+import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
 
 
 
@@ -29,6 +30,7 @@ import { coreABI, coreAddress } from "@/helpers/coreContract";
     const { isOpen: isStakeOpen, onOpen: onStakeOpen, onClose: onStakeClose } = useDisclosure()
     const { isOpen: isRewardsOpen, onOpen: onRewardsOpen, onClose: onRewardsClose } = useDisclosure()
     const { isOpen: isWithdrawOpen, onOpen: onWithdrawOpen,  onClose: onWithdrawClose } = useDisclosure()
+    const { isOpen: isWithdrawAllOpen, onOpen: onWithdrawAllOpen, onClose: onWithdrawAllClose} = useDisclosure()
  
     const client = userClient(privateKey)
 
@@ -47,32 +49,36 @@ import { coreABI, coreAddress } from "@/helpers/coreContract";
     
 
 
+    let cards = []
 
 
+    if (available && onContract){
 
-    const cards = [
-        {
-            name: 'Montant Bloqué',
-            amount: format(onContract[0])+' USD',
-            cta: 'Bloqué',
-            icon: AiFillLock,
-            onClick: onStakeOpen
-        },
-        {
-            name: 'Montant Généré',
-            amount: format(onContract[1])+' USD',
-            cta: 'Récuperer',
-            icon: BsClockFill,
-            onClick: onRewardsOpen
-        },
-        {
-            name: 'Montant Récolté',
-            amount: format(onContract[0] + onContract[1] + available.formatted)+' USD',
-            cta: 'Retirer',
-            icon: HiOutlineCircleStack,
-            onClick: onWithdrawOpen
-        },
-    ]
+        cards = [
+            {
+                name: 'Montant Bloqué',
+                amount: format(onContract[0])+' USD',
+                cta: ['Retirer'],
+                icon: AiFillLock,
+                onClick: [onWithdrawOpen]
+            },
+            {
+                name: 'Montant Généré',
+                amount: format(onContract[1])+' USD',
+                cta: ['Récuperer'],
+                icon: BsClockFill,
+                onClick: [onRewardsOpen]
+            },
+            {
+                name: 'Montant Récolté',
+                amount: format(onContract[0] + onContract[1] + available.formatted)+' USD',
+                cta: ['Bloquer', 'Retirer'],
+                icon: HiOutlineCircleStack,
+                onClick: [onStakeOpen, onWithdrawAllOpen]
+            },
+        ]
+
+    }
 
     function toDecimal(num){
         BigInt(num*10**tokens.decimals)
@@ -85,15 +91,18 @@ import { coreABI, coreAddress } from "@/helpers/coreContract";
 
 
     useEffect(()=>{
-        setBalanceUSDC({
-            total: onContract[0] + onContract[1] + available.value,
-            available: available.value,
-            staked:onContract[0] ,
-            rewards: onContract[1]
-        })
+
+        if(available  && onContract){
+
+            setBalanceUSDC({
+                total: onContract[0] + onContract[1] + available.value,
+                available: available.value,
+                staked:onContract[0] ,
+                rewards: onContract[1]
+            })
+        }
     },[])
 
-    console.log(balanceUSDC)
 
     return (
         <Box>
@@ -111,7 +120,13 @@ import { coreABI, coreAddress } from "@/helpers/coreContract";
                                 <Text fontSize={'xl'} fontWeight={'bold'}>
                                     {card.amount}
                                 </Text>
-                                <Button onClick={card.onClick}>{card.cta}</Button>
+                                <HStack>
+                                {
+                                    card.cta.map(cta=> {
+                                        return <Button onClick={card.onClick[card.cta.indexOf(cta)]}>{card.cta[card.cta.indexOf(cta)]}</Button>
+                                    })
+                                }
+                                </HStack>
                             </HStack>
                             </CardBody>
                         </Card>
@@ -120,9 +135,10 @@ import { coreABI, coreAddress } from "@/helpers/coreContract";
             }
         </SimpleGrid>
 
-        <ToStackModal isOpen={isStakeOpen} onClose={onStakeClose} available={balanceUSDC.available} client={client} />
         <ToRewardsModal isOpen={isRewardsOpen} onClose={onRewardsClose} rewards={balanceUSDC.rewards} client={client}/>
         <ToWithdrawModal isOpen={isWithdrawOpen} onClose={onWithdrawClose} total={balanceUSDC.total} client={client}/>
+        <ToStackModal isOpen={isStakeOpen} onClose={onStakeClose} available={balanceUSDC.available} client={client} />
+        <ToWithdrawAllModal isOpen={isWithdrawAllOpen} onClose={onWithdrawAllClose} total={balanceUSDC.total} client={client}/>
         </Box>
     )
 

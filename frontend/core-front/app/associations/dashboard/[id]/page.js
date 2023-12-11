@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 
 export default function AssoPage (){
     const params = useParams()
-    const [user , setUser] = useState(assos[params.id])
+    const id = params.id 
+    const [user , setUser] = useState(assos[id])
     const [privateKey, setPrivateKey] =  useState(decryptData(user.encodedPrivateKey))
     console.log(privateKey)
     useEffect(()=>{
