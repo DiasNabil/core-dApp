@@ -1,7 +1,7 @@
 {
-  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js",
-  "/donate/page": "app/donate/page.js",
+  "/not-found": "app/not-found.js",
+  "/associations/login/page": "app/associations/login/page.js",
+  "/associations/page": "app/associations/page.js",
   "/page": "app/page.js",
-  "/associations/register/page": "app/associations/register/page.js",
   "/donate/[id]/page": "app/donate/[id]/page.js"
 }
