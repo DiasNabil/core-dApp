@@ -13,15 +13,21 @@ export const client = createWalletClient({
     transport: http()
   })
 
-  //export const ownerClient = createWalletClient({
-   //   account: privateKeyToAccount(faucetPrivateKey),
-    //  chain: sepolia,
-     // transport: typeof window !== undefined &&  custom(window.ethereum)
-  
- //   })
+
  export const ownerClient = createWalletClient({
   account: privateKeyToAccount(faucetPrivateKey),
   chain: sepolia,
   transport: http()
 
 })
+
+export function userClient (privateKey){
+
+  const client = createWalletClient({
+    account: privateKeyToAccount(privateKey),
+    chain: sepolia,
+    transport: http(),
+  })
+
+  return client 
+}

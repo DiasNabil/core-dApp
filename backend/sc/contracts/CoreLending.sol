@@ -51,7 +51,7 @@ contract CoreLending is Ownable {
     }
 
     function registerUser(address user) external onlyOwner {
-        require(userInfo[user].isRegistered, 'Already registered');
+        require(!userInfo[user].isRegistered, 'Already registered');
 
         userInfo[user].isRegistered = true;
         emit Registered(user, userInfo[user]);
@@ -91,8 +91,7 @@ contract CoreLending is Ownable {
 
     /// @dev par souci d'optimisation boucler en dehors du smart contract pour mettre les données constamment à jour ? 
     /// @param user adresse de l'utilisateur à mettre à jour
-    function updateInterest(address user) public {
-        // Require only registered || address(this) || onlyOwner
+    function updateInterest(address user) public onlyRegistered onlyOwner {
         uint256 updatedPool = IERC20(lendingTokenAddress).balanceOf(address(this));
         uint256 interestPool = updatedPool - contractPool;
 

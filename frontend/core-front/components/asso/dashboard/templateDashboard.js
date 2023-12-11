@@ -15,22 +15,23 @@ import { FiMenu} from "react-icons/fi";
 import React from "react";
 import Logo from "@/app/Logo";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
   
 export default function TemplateDashboard({children}){
     const sidebar = useDisclosure();
 
     const router = useRouter()
+    const params = useParams()
     
     async function logout() {
         try {
-            await axios.get('/api/asso/logout')
+            
+          router.push('/')
             console.log('fin de la session de connexion.')
         } catch(e) {
             console.error('une erreur est survenue durant la deconnexion veuillez réessayer.')
         }
 
-        router.push('/')
     }
   
     const NavItem = (props) => {
@@ -95,10 +96,10 @@ export default function TemplateDashboard({children}){
           color="red"
           aria-label="Main Navigation"
         >
-          <Link href='/associations/dashboard'><NavItem color={'black'}>Portefeuille</NavItem></Link>
-          <Link href='/associations/dashboard/donationlist'><NavItem color={'black'}>Dons recus</NavItem></Link>
-          <Link href='/associations/dashboard/profile'><NavItem color={'black'}>Fiche information</NavItem></Link>
-          <Link href='/associations/dashboard'><NavItem color={'black'}>Reglages</NavItem></Link>
+          <Link href={`/associations/dashboard/${params.id}`}><NavItem color={'black'}>Portefeuille</NavItem></Link>
+          <Link href={`/associations/dashboard/${params.id}/donationlist`}><NavItem color={'black'}>Dons recus</NavItem></Link>
+          <Link href={`/associations/dashboard/${params.id}/profile`}><NavItem color={'black'}>Fiche information</NavItem></Link>
+          <Link href={`/associations/dashboard/${params.id}`}><NavItem color={'black'}>Reglages</NavItem></Link>
         </Flex>
       </Box>
     );

@@ -1,3 +1,5 @@
+import { encryptData } from "./encrypt";
+
 export const assos = [
     {
         name: 'Helpers Social  Development Foundation',
@@ -7,8 +9,8 @@ export const assos = [
         cover: 'https://giveth.mypinata.cloud/ipfs/QmfZ6YaqHL6FnS3WSXrhAZv1ukahK4JUacZvX7phofqiFg', 
         website: 'https://www.helpersfoundation.org/about-us/', 
         id: 1,
-        address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
-        encodedPrivateKey:'',
+        address: '0x78E8281091ed1Cf0c57a6AadeE0c8c820Fe76C2d',
+        encodedPrivateKey:encryptData('0x2c6eb381fe38d5ae60faa0797d7a916128d935861540456ca136022ebe029118'),
         mail: 'test1@test.com',
         password: '080697'
     },
@@ -21,7 +23,7 @@ export const assos = [
         website: 'https://www.commonsstack.org/', 
         id: 2,
         address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
-        encodedPrivateKey:'',
+        encodedPrivateKey:encryptData('0xe4cb8ecf8282b61565398d1fa4300020facbb1e79bf7c4530a00fe30dba2d4fb'),
         mail: 'test1@test.com',
         password: '080697'
     },
@@ -34,7 +36,7 @@ export const assos = [
         website: 'https://form.jotform.com/223058111377047', 
         id: 3,
         address: '0x57164f80342c2eFE58B42196CcFb37C5eD920679',
-        encodedPrivateKey:'',
+        encodedPrivateKey:encryptData('0xbc4c38e5e0b0c7b1ba90f3b7e4f8570f577a7d3c01ed3d431cee537366a06283'),
         mail: 'test1@test.com',
         password: '080697'
     }

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Input, Text, VStack } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Input, Text, VStack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import CoreIcon from "@/app/coreIcon";
 import Link from "next/link";
+import { assos } from "@/helpers/asso";
 
 
 
@@ -14,21 +15,35 @@ export default function LoginForm() {
         email: '',
         password: '',
     })
-
+    const toast = useToast()
     const router = useRouter()
 
     async function handleSubmit(e){
         //e.preventDefault() 
 
         try{
-            await axios.post('/api/asso/login', userData)
+            
+            const auth = assos.find(asso => {
+                if (userData.email === asso.mail && userData.password === asso.password){
+                    
+                    return asso
+                }
+            })
+            if(!auth){
+                throw new Error("l'email ou le mot de passe que vous avez renseiger est incorrect, veuillez réessayer")
+            }
             
             console.log('identifiant correct, redirection vers le dashboard...')
-            router.push('/associations/dashboard')
+            router.push(`/associations/dashboard/${auth.id}`)
         } catch(err){
-            if(err.response.status === 500) {
                 console.error("l'email ou le mot de passe que vous avez renseiger est incorrect, veuillez réessayer.")
-            }else console.error("Une erreur est survenue durant la connexion, veuillez réessayer")
+                toast({
+                    title: 'echec de connexion',
+                    description: 'mot de passe ou email incorrect, veuillez réessayez',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                })
         }
     }
 

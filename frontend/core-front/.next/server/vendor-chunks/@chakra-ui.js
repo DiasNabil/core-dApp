@@ -4591,6 +4591,76 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "(rsc)/./node_modules/@chakra-ui/button/dist/index.mjs":
+/*!*******************************************************!*\
+  !*** ./node_modules/@chakra-ui/button/dist/index.mjs ***!
+  \*******************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Button: () => (/* binding */ e0),
+/* harmony export */   ButtonGroup: () => (/* binding */ e1),
+/* harmony export */   ButtonSpinner: () => (/* binding */ e2),
+/* harmony export */   IconButton: () => (/* binding */ e3),
+/* harmony export */   useButtonGroup: () => (/* binding */ e4)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/build/webpack/loaders/next-flight-loader/module-proxy */ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js");
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+const e0 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs#Button`);
+
+const e1 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs#ButtonGroup`);
+
+const e2 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs#ButtonSpinner`);
+
+const e3 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs#IconButton`);
+
+const e4 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/button/dist/index.mjs#useButtonGroup`);
+
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/@chakra-ui/image/dist/index.mjs":
+/*!******************************************************!*\
+  !*** ./node_modules/@chakra-ui/image/dist/index.mjs ***!
+  \******************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Image: () => (/* binding */ e0),
+/* harmony export */   Img: () => (/* binding */ e1),
+/* harmony export */   useImage: () => (/* binding */ e2)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/build/webpack/loaders/next-flight-loader/module-proxy */ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js");
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/image/dist/index.mjs`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+const e0 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/image/dist/index.mjs#Image`);
+
+const e1 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/image/dist/index.mjs#Img`);
+
+const e2 = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/home/roadman/alyra/core/frontend/core-front/node_modules/@chakra-ui/image/dist/index.mjs#useImage`);
+
+
+/***/ }),
+
 /***/ "(rsc)/./node_modules/@chakra-ui/layout/dist/index.mjs":
 /*!*******************************************************!*\
   !*** ./node_modules/@chakra-ui/layout/dist/index.mjs ***!

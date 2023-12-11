@@ -14,9 +14,7 @@ export default function Navbar() {
     const pathName = usePathname()
 
     const assoPath = [
-        '/associations/dashboard',
-        '/associations/dashboard/profile',
-        '/associations/dashboard/donationlist'
+        '/associations/dashboard/',
     ]
 
     return ( 
@@ -28,7 +26,7 @@ export default function Navbar() {
           }}
           py={4}
           shadow="md"
-          display={assoPath.includes(pathName) ? 'none' : 'block'}
+          display={pathName.includes(assoPath) ? 'none' : 'block'}
           >
             <Flex alignItems="center" justifyContent="space-between" mx="auto">
                 <HStack display="flex" spacing={3} alignItems="center" zIndex={2}>

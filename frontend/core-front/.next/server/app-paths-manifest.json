@@ -3,5 +3,9 @@
   "/associations/page": "app/associations/page.js",
   "/associations/login/page": "app/associations/login/page.js",
   "/page": "app/page.js",
+<<<<<<< HEAD
+=======
+  "/associations/dashboard/[id]/page": "app/associations/dashboard/[id]/page.js",
+>>>>>>> a7d0ddd (login - register -dashboard UI)
   "/donate/[id]/page": "app/donate/[id]/page.js"
 }

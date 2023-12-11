@@ -6,7 +6,7 @@ import { tokens } from "@/helpers/tokens";
 import { Button } from "@chakra-ui/button";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import { useToast } from "@chakra-ui/toast";
-import { getAccount,  sendTransaction, sepolia, waitForTransaction, writeContract } from "@wagmi/core";
+import { getAccount,  sendTransaction, waitForTransaction, writeContract } from "@wagmi/core";
 import axios from "axios";
 import { useRef, useState } from "react";
 import { encodeFunctionData} from "viem";
@@ -19,8 +19,6 @@ export default function PaymentModal({isOpen, onClose, data}){
     const account = getAccount()
     const [isLoading, setLoading] = useState(false)
     async function handleTx(){
-      
-      
       setLoading(true)
       const params = {
         sellToken: data.token.contract,
@@ -112,30 +110,37 @@ export default function PaymentModal({isOpen, onClose, data}){
                 to: nftAddress,
                 data: callData
               })
-
-              const whitelisted = waitForTransaction({hash: request})
-              request.nonce += Math.trunc((Math.random() * 10))
+  
               const signature = await ownerClient.signTransaction(request)
+      
+              request.nonce += Math.trunc((Math.random() * 10))
               const hash = await ownerClient.sendRawTransaction({ serializedTransaction: signature })
-              
-              
-              if(hash && whitelisted){
-                console.log('transaction effectuée ! envoi du nft en cours ...')
 
-                  const {hash: mint} = await writeContract({
-                    address: nftAddress,
-                    abi: nftABI,
-                    functionName: 'mint',
-                    args: [URI]
-                  })
-                  
-                  if(mint){
-                    console.log('mint du nft...')
+        
+              if(hash){
+                const whitelisted = await waitForTransaction({hash})
+          
+                
+                if(whitelisted){
+                  console.log('transaction effectuée ! envoi du nft en cours ...')
+  
+                    const {hash: mint} = await writeContract({
+                      address: nftAddress,
+                      abi: nftABI,
+                      functionName: 'mint',
+                      args: [URI]
+                    })
                     
-                    console.log('nft minter !', mint)
-                    setLoading(false)
-                    onClose()
-                  }
+                    if(mint){
+                      console.log('mint du nft...')
+                      
+                      console.log('nft minter !', mint)
+                      setLoading(false)
+                      onClose()
+                    }
+                }
+
+
               }
             }       
         }

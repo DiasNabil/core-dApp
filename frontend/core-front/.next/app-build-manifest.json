@@ -45,6 +45,29 @@
       "static/chunks/main-app.js",
       "static/chunks/app/associations/login/page.js"
     ],
+<<<<<<< HEAD
+=======
+    "/associations/dashboard/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/associations/dashboard/[id]/page.js"
+    ],
+    "/associations/dashboard/[id]/template": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/associations/dashboard/[id]/template.js"
+    ],
+    "/associations/dashboard/[id]/donationlist/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/associations/dashboard/[id]/donationlist/page.js"
+    ],
+    "/associations/dashboard/[id]/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/associations/dashboard/[id]/profile/page.js"
+    ],
+>>>>>>> a7d0ddd (login - register -dashboard UI)
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

@@ -45,8 +45,11 @@ export default function RegisterForm() {
             })
             
             console.log('Faucet Receipt: ', faucet)
-            const data = await axios.post('/api/asso/register', userData)
-            toast.promise(data, {
+            const timer = new Promise((resolve, reject) => {
+                setTimeout(() => resolve(200), 5000)
+              })
+      
+            toast.promise(timer, {
                 success: { title: 'Inscription envoyé', description: "Votre demande d'inscriptione à bien été envoyé" },
                 error: { title: 'Oops ! ', description: "Une erreur s'est produite, veuillez réessayé" },
                 loading: { title: 'Chargement en cours...'},
