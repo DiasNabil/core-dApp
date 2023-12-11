@@ -17,7 +17,7 @@ module.exports = {
   networks:{
     sepolia:{
       url: SEPOLIA_RPC_URL,
-      accounts: [owner, user1, user2, user3]
+      accounts: [owner]
     }
   },
   etherscan: {
@@ -25,6 +25,9 @@ module.exports = {
   },
   gasReporter: {
     enabled: true,
+  },
+  sourcify: {
+    enabled: true
   },
   solidity: "0.8.20",
 };

@@ -5,6 +5,7 @@ import { tokens } from "@/helpers/tokens"
 import { fetchBalance , sendTransaction } from "@wagmi/core"
 import { Button, FormControl, FormLabel, Input, Select, Text } from "@chakra-ui/react"
 import axios from "axios"
+import { writeContract } from "viem/_types/actions/wallet/writeContract"
 
 
 
@@ -58,6 +59,7 @@ export default function TransactionForm({address}) {
     async function handleSubmit(e){
 
         e.preventDefault()
+        formData.amount = Number(formData.amount + '0.005')
         const sellAmount = Number(formData.amount*10**formData.token.decimals)
         const data = {...formData, sellAmount}
 

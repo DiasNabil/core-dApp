@@ -13,13 +13,14 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Flex, HStack, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/layout";
-import { Slider, SliderMark, SliderTrack, SliderFilledTrack, Tooltip, SliderThumb } from "@chakra-ui/react";
+import { Slider, SliderMark, SliderTrack, SliderFilledTrack, Tooltip, SliderThumb, useToast } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/select";
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
 import { fetchBalance } from "@wagmi/core";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { readContracts, useAccount, useBalance } from "wagmi";
+import { RxAvatar } from "react-icons/rx";
 
 
 export default function Payment(){
@@ -35,11 +36,26 @@ export default function Payment(){
     const {onOpen: onConnectOpen, isOpen: isConnectOpen, onClose: onConnectClose} = useDisclosure()
     const {onOpen: onPaymentOpen, isOpen: isPaymentOpen, onClose: onPaymentClose} = useDisclosure()
 
-    const {address, isConnected} = useAccount()
+    const {address,status, isConnected, isDisconnected} = useAccount()
+    const toast = useToast()
+    const toastRef = useRef()
 
     useEffect(()=>{
 
         if(address){
+        toast.closeAll()
+        toast({
+                title: `connected ${address}`,
+                position: 'bottom-left',
+                duration: null,
+                icon: ' ',
+                containerStyle: {
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textoverflow: 'ellipsis',
+                }
+                })
+
 
             let arr = []
     
@@ -48,17 +64,24 @@ export default function Payment(){
                     address,
                     token: token.contract
                 })
-    
+
+                
+                
                 token.balance = Number((Math.round(balance.formatted * 100) / 100).toFixed(2));
-    
+                
+                if(formData.token === token){
+                    setBalance(token.balance)
+                }
                 arr.push(token)
                 if(arr.length === arrTokens.length) {
                     setTokens(arr)
                 }
             })
+
+
         }
 
-    }, [address])
+    }, [address, isDisconnected])
 
     useEffect(()=>{
         const tips = (sliderValue * formData.amount) / 100 
@@ -198,7 +221,7 @@ export default function Payment(){
                             </Select>
             
                             <FormLabel> Le montant de votre don</FormLabel>
-                            <Input placeholder="0.00" type="number"  step='any' name="amount" value={formData.amount} onChange={e => handleChange(e)} />
+                            <Input placeholder="0.00" type='number'  step='any' name="amount" value={formData.amount === 0 ? '' : formData.amount} onChange={e => handleChange(e)} />
                             <Text fontSize={'sm'}>Balance: {currentBalance}</Text>
 
                             <FormLabel mt={4}>Contribution Core:</FormLabel>

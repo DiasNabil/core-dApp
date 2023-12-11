@@ -10,7 +10,7 @@ contract CoreNFT is Ownable, ERC721URIStorage {
     uint64 private _tokenIds;
 
     //on initialise une whitelist pour les donateurs 
-    mapping(address=>bool) hasDonate;
+    mapping(address=>bool) public  hasDonate;
 
     modifier onlyDonors {
         require(hasDonate[msg.sender], "not allowed to mint");
@@ -26,6 +26,10 @@ contract CoreNFT is Ownable, ERC721URIStorage {
 
     function approveDonors(address donors) external onlyOwner {
         hasDonate[donors] = true;
+    }
+
+    function isDonors(address addr) external view onlyOwner returns (bool) {
+        return hasDonate[addr];
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
@@ -66,8 +70,4 @@ contract CoreNFT is Ownable, ERC721URIStorage {
         emit EtherWithdrawn(msg.sender, balance);
     }
 
-    function selfDestruct() public onlyOwner {
-        // Transférer les fonds restants à l'adresse du propriétaire
-        selfdestruct(payable(msg.sender));
-    }
 }

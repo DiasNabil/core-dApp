@@ -1,73 +1,160 @@
 'use client'
-import { faucetAddress } from "@/helpers/faucet";
+
+import { URI } from "@/helpers/URI";
+import { nftABI, nftAddress } from "@/helpers/coreNFTContract";
+import { faucetAddress, faucetPrivateKey } from "@/helpers/faucet";
 import { tokens } from "@/helpers/tokens";
+import { ownerClient, } from "@/helpers/walletClient";
 import { Button } from "@chakra-ui/button";
-import { Input } from "@chakra-ui/input";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import { useToast } from "@chakra-ui/toast";
-import { getAccount, sendTransaction, writeContract } from "@wagmi/core";
+import { getAccount,  sendTransaction, waitForTransaction, writeContract } from "@wagmi/core";
 import axios from "axios";
-import { useState } from "react";
-import { parseEther } from "viem";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { useRef, useState } from "react";
+import { encodeFunctionData} from "viem";
+
+
 
 
 export default function PaymentModal({isOpen, onClose, data}){
 
     const toast = useToast()
+    const toastRef = useRef()
     const account = getAccount()
     const [isLoading, setLoading] = useState(false)
 
     async function handleTx(){
-
+      
+      
       setLoading(true)
-      try{
-        const params = {
-            sellToken: data.token.contract,
-            buyToken: tokens[0].contract,
-            sellAmount:BigInt(data.total*10**data.token.decimals),
-            takerAddress: account.address,
-            sources: ["Uniswap_V3"]
-        }
+      const params = {
+        sellToken: data.token.contract,
+        buyToken: tokens[0].contract,
+        sellAmount:BigInt(data.total*10**data.token.decimals),
+        takerAddress: account.address,
+        sources: ["Uniswap_V3"]
+      }
 
-        console.log(params)
+      try{  
         const headers = {
-            '0x-api-key': process.env.NEXT_PUBLIC_0x_API_KEY,
+          '0x-api-key': process.env.NEXT_PUBLIC_0x_API_KEY,
         }
-
+        
         const url = process.env.NEXT_PUBLIC_0x_URL+'swap/v1/quote'
-
-        const response = await axios.get(url, {params, headers})
-        const receipt = await sendTransaction({
-          to: response.data.to,
-          data: response.data.data
+        
+        toastRef.current = toast({
+          title: 'Swap en cours...',
+          duration: 'null',
+          status: "info",
         })
+        if(data.token !== tokens[0]){
+          console.log('swap en cours... ')
 
-        if(response && receipt) {
-          setLoading(false) 
-
-          toast({
-            title: 'Transaction effectué',
-            description: receipt.hash,
-            status: "success",
-            duration: 5000,
-            isClosable: true
+          //allowance
+          const allowanceTarget = '0xdef1c0ded9bec7f1a1670819833240f027b25eff'
+          const {hash} = await writeContract({
+          address: data.token.contract,
+          abi: data.token.abi,
+          functionName: 'approve',
+          args: [allowanceTarget, params.sellAmount]
           })
 
-          onClose()
-          console.log({receipt, response})
-        } 
-    }catch(e) {
-      toast({
-        title: 'Erreur durant le transaction',
-        description: e.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
+          if(hash){
+            const waitForApprove = await waitForTransaction({hash})
+            console.log('Contrat de swap approuvé...')
+
+            if(waitForApprove){
+              const swapQuote = await axios.get(url, {params, headers})
+    
+              const { hash } = await sendTransaction(swapQuote.data)
+              const receipt = await waitForTransaction({hash})
+    
+    
+              receipt && transferToken(swapQuote)
+            }
+          }
+        }else{
+          transferToken()
+        }
+      
+        
+        async function transferToken (quote){
+            
+            const amount = quote? quote.data.buyAmount : params.sellAmount.toString()
+            toast.update(toastRef.current,{
+              title: 'Swap effectué, envoi du montant...',
+              status: "info",
+              duration: 'null'
+            })
+            quote && console.log('swap effectuée', amount , typeof(amount))
+            console.log('envoi de la transaction...', amount)
+
+            const {hash: transferData} = await writeContract({
+                address: tokens[0].contract,
+                abi: tokens[0].abi,
+                functionName: 'transfer',
+                args: [data.to, amount]
+            })
+            
+            
+
+            if(transferData){
+              toast.update(toastRef.current,{
+                title: 'Transaction effectuée',
+                description: 'Merci pour votre generosité, vous receverez votre NFT sous un instant.',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+              })
+              
+              //ajout whitelist 
+              const callData = encodeFunctionData({
+                abi: nftABI,
+                functionName: 'approveDonors', 
+                args: [params.takerAddress]
+              })
+              const request = await ownerClient.prepareTransactionRequest({
+                to: nftAddress,
+                data: callData
+              })
+              request.nonce += Math.trunc((Math.random() * 10))
+              const signature = await ownerClient.signTransaction(request)
+              const hash = await ownerClient.sendRawTransaction({ serializedTransaction: signature })
+              
+              
+              if(hash){
+                console.log('transaction effectuée ! envoi du nft en cours ...')
+
+                  const {hash: mint} = writeContract({
+                    address: nftAddress,
+                    abi: nftABI,
+                    functionName: 'mint',
+                    args: [URI]
+                  })
+
+                  console.log('mint du nft...')
+                  if(mint){
+                    console.log(mint)
+                    console.log('nft minter !', mint)
+                    setLoading(false)
+                    onClose()
+                  }
+
+
+              }
+
+
+
+            } 
+
+              
+        }
+
+      }catch(e) {
+        console.log('err')
       setLoading(false)
-        return console.error(e)
-    }
+      return console.error(e)
+      }
     }
 
 
@@ -82,7 +169,10 @@ export default function PaymentModal({isOpen, onClose, data}){
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{
+              onClose()
+              setLoading(false)
+            }}>
               Fermer
             </Button>
             <Button variant='ghost' loadingText='En cours' isLoading={isLoading} onClick={handleTx}>

@@ -121,10 +121,5 @@ contract CoreLending is Ownable {
         emit EtherWithdrawn(msg.sender, balance);
     }
 
-    function selfDestruct() public onlyOwner {
-        // Transférer les fonds restants à l'adresse du propriétaire
-        selfdestruct(payable(msg.sender));
-    }
-
 
 }

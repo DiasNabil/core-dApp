@@ -1,5 +1,7 @@
-import { createPublicClient, createWalletClient, http } from 'viem'
+import { createPublicClient, createWalletClient, custom, http } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
 import { sepolia } from 'wagmi'
+import { faucetPrivateKey } from './faucet'
 
 export const client = createWalletClient({
     chain: sepolia,
@@ -9,4 +11,11 @@ export const client = createWalletClient({
   export const publicClient = createPublicClient({
     chain: sepolia,
     transport: http()
+  })
+
+  export const ownerClient = createWalletClient({
+    account: privateKeyToAccount(faucetPrivateKey),
+    chain: sepolia,
+    transport: custom(window.ethereum)
+
   })
