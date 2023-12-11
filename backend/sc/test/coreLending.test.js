@@ -66,7 +66,7 @@ describe('Lending test', function(){
       describe('Deposit', function() {
 
         it('should not deposit if not registered', async function() {
-          expect(CoreContract.connect(user1).deposit())
+          expect(CoreContract.connect(user1).deposit((5000*10**6)))
         })
         //it('should not deposit if amount do no exceed 0' async function() {})
         //it('should not deposit if contract is not allowed by addr' async function() {})
