@@ -1,7 +1,7 @@
 {
   "/not-found": "app/not-found.js",
-  "/associations/login/page": "app/associations/login/page.js",
   "/associations/page": "app/associations/page.js",
+  "/associations/login/page": "app/associations/login/page.js",
   "/page": "app/page.js",
   "/donate/[id]/page": "app/donate/[id]/page.js"
 }
