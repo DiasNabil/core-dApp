@@ -1,4 +1,3 @@
 {
-  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js"
 }

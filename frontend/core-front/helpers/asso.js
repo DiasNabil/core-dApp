@@ -7,7 +7,9 @@ export const assos = [
         cover: 'https://giveth.mypinata.cloud/ipfs/QmfZ6YaqHL6FnS3WSXrhAZv1ukahK4JUacZvX7phofqiFg', 
         website: 'https://www.helpersfoundation.org/about-us/', 
         id: 1,
-        address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8'
+        address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
+        mail: 'test1@test.com',
+        password: '080697'
     },
     {
         name: 'Commons Stack',
@@ -17,7 +19,9 @@ export const assos = [
         cover: 'https://giveth.mypinata.cloud/ipfs/QmaXsRSbmfrnGiaFQzx3HgY1DfgaBLDaiEgtAGQojrvHAt', 
         website: 'https://www.commonsstack.org/', 
         id: 2,
-        address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8'
+        address: '0x4b183d9Bf8FbaC18890F37eADB0cDa7D8649CCA8',
+        mail: 'test1@test.com',
+        password: '080697'
     },
     {
         name: 'Relocating Web3 Iranians',
@@ -27,6 +31,8 @@ export const assos = [
         cover: 'https://giveth.mypinata.cloud/ipfs/Qmaj5qAcDt5wCyC9davACzAq9D8dkFCYkFvxEMVrFPAv8n', 
         website: 'https://form.jotform.com/223058111377047', 
         id: 3,
-        address: '0x57164f80342c2eFE58B42196CcFb37C5eD920679'
+        address: '0x57164f80342c2eFE58B42196CcFb37C5eD920679',
+        mail: 'test1@test.com',
+        password: '080697'
     }
 ]
