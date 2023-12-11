@@ -18,7 +18,7 @@ import { Select } from "@chakra-ui/select";
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
 import { fetchBalance } from "@wagmi/core";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 

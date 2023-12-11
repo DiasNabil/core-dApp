@@ -23,7 +23,11 @@ export default function PaymentModal({isOpen, onClose, data}){
     const [isLoading, setLoading] = useState(false)
     
     useEffect(()=>{
-      const ownerClient = ownerClient
+
+      if(typeof window !== undefined){
+
+        const ownerClient = ownerClient
+      }
     },[])
 
     async function handleTx(){
