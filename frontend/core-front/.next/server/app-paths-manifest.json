@@ -1,16 +1,1 @@
-{
-  "/associations/page": "app/associations/page.js",
-  "/associations/login/page": "app/associations/login/page.js",
-  "/page": "app/page.js",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  "/associations/dashboard/[id]/page": "app/associations/dashboard/[id]/page.js",
->>>>>>> a7d0ddd (login - register -dashboard UI)
-  "/donate/[id]/page": "app/donate/[id]/page.js"
-=======
-  "/donate/[id]/page": "app/donate/[id]/page.js",
-  "/associations/dashboard/[id]/page": "app/associations/dashboard/[id]/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
->>>>>>> e0c6197 (testing)
-}
+{}
