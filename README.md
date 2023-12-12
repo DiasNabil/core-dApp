@@ -31,4 +31,4 @@ Contrats :
 
 Déployé sur Sepolia
 Domaine: https://core-repo.vercel.app/
-video de demonstration: 
+video de demonstration: https://clipchamp.com/watch/59aHvhluVDe 
