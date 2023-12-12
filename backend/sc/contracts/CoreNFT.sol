@@ -28,6 +28,8 @@ contract CoreNFT is Ownable, ERC721URIStorage {
     function approveDonors(address donors) external onlyOwner {
         require(!hasDonate[donors], 'already registered');
         hasDonate[donors] = true;
+
+        emit Registered(msg.sender);
     }
 
     function _baseURI() onlyOwner internal view virtual override returns (string memory) {
