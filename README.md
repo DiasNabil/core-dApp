@@ -18,7 +18,7 @@ Portail reliant donateur - organisation - web3. L'objectif est de créer un cerc
 
 ### TEST UNITAIRE 
 <img width="446" alt="image" src="https://github.com/DiasNabil/core-repo/assets/103931817/9810d6df-5ca8-41ef-ac8d-b96d84375d42"> </br>
-les test unitaires sur sepolia coutant chère en gas, j'ai donc fait une copie du contrat avec la création d'un token ERC20 afin de tester ses principales fonctionnalités. 
+les tests unitaires sur sepolia coutant chère en gas, j'ai donc fait une copie du contrat avec la création d'un token ERC20 afin de tester ses principales fonctionnalités. 
 
 Contrats :
 - CoreLending contract:0x931A7028D24B0468a9b86c2f1d33f81A81D19a2c
