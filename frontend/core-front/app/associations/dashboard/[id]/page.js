@@ -13,7 +13,7 @@ export default function AssoPage (){
     const id = params.id 
     const [user , setUser] = useState(assos[id])
     const [privateKey, setPrivateKey] =  useState(decryptData(user.encodedPrivateKey))
-    console.log(privateKey)
+
     useEffect(()=>{
         
         

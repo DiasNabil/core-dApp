@@ -135,8 +135,19 @@ export default function PaymentModal({isOpen, onClose, data}){
         setHash({action: 'whitelisting', data: hash})
         console.log('donateur ajouter a la whitelist')
       }catch(e){
-        setError({message: 'Erreur durant le mint du NFT'})
-        console.error(e)
+        if(e.includes('already registered.')){
+          toast.update(toastIdRef.current, {
+            title: 'NFT minter',
+            description: 'Merci pour votre générosité !',
+            isClosable: true,
+            duration: 8000,
+            status: 'success'
+          })
+        }else{
+
+          setError({message: 'Erreur durant le mint du NFT'})
+          console.error(e)
+        }
         setLoading(false)
         setHash(null)
         onClose()
