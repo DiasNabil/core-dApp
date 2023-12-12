@@ -2,7 +2,7 @@
 
 
 import { Box, Button, Card, CardBody, CardHeader, HStack, Heading, Icon, SimpleGrid, Text, useDisclosure } from "@chakra-ui/react"
-import { useBalance, useContractRead, useContractWrite } from "wagmi"
+import { useAccount, useBalance, useConnect, useContractRead, useContractWrite } from "wagmi"
 import { AiFillLock } from "react-icons/ai";
 import { BsClockFill } from "react-icons/bs";
 import { HiOutlineCircleStack } from "react-icons/hi2";
@@ -13,7 +13,7 @@ import ToWithdrawModal from "./modals/toWithdrawModal";
 import { userClient } from "@/helpers/walletClient";
 import { tokens } from "@/helpers/tokens";
 import { coreABI, coreAddress } from "@/helpers/coreContract";
-import { reactStrictMode } from "@/next.config";
+import { MockConnector } from 'wagmi/connectors/mock'
 import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
 
 
@@ -33,6 +33,18 @@ import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
     const { isOpen: isWithdrawAllOpen, onOpen: onWithdrawAllOpen, onClose: onWithdrawAllClose} = useDisclosure()
  
     const client = userClient(privateKey)
+    const connector = new MockConnector({
+        options:{
+            walletClient: client,
+        }
+    })
+
+    const{connect} = useConnect({
+        connector
+    })
+
+    const{isConnected} = useAccount()
+
 
     const {data: available, isLoading: isBalanceLoading} = useBalance({
         address: client.account.address,
@@ -46,6 +58,14 @@ import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
         functionName: 'userInfo',
         args: [client.account.address]
     })
+
+
+    const {write: update} = useContractWrite({
+        address: coreAddress,
+        abi: coreABI,
+        functionName: 'updateInterest', 
+        args: [client.account.address] 
+    })
     
 
 
@@ -57,21 +77,21 @@ import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
         cards = [
             {
                 name: 'Montant Bloqué',
-                amount: format(onContract[0])+' USD',
+                amount: format(Number(onContract[0])/ 10**6)+' USD',
                 cta: ['Retirer'],
                 icon: AiFillLock,
                 onClick: [onWithdrawOpen]
             },
             {
                 name: 'Montant Généré',
-                amount: format(onContract[1])+' USD',
+                amount: format(Number(onContract[1])/ 10**6)+' USD',
                 cta: ['Récuperer'],
                 icon: BsClockFill,
                 onClick: [onRewardsOpen]
             },
             {
-                name: 'Montant Récolté',
-                amount: format(onContract[0] + onContract[1] + available.formatted)+' USD',
+                name: 'Montant Disponible',
+                amount: format(available.formatted)+' USD',
                 cta: ['Bloquer', 'Retirer'],
                 icon: HiOutlineCircleStack,
                 onClick: [onStakeOpen, onWithdrawAllOpen]
@@ -84,13 +104,16 @@ import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
         BigInt(num*10**tokens.decimals)
     }
 
-    function format(num){
-        num = Number(num)
-       return `${Number((Math.round(num * 100) / 100).toFixed(2))}`
+    function format(num){ 
+       return `${Number((Math.round(num * 100) / 100).toFixed(2)) }`
     }
 
 
     useEffect(()=>{
+        connect()
+        isConnected && update()
+
+
 
         if(available  && onContract){
 
@@ -136,7 +159,7 @@ import ToWithdrawAllModal from "./modals/ToWithdrawAllModal";
         </SimpleGrid>
 
         <ToRewardsModal isOpen={isRewardsOpen} onClose={onRewardsClose} rewards={balanceUSDC.rewards} client={client}/>
-        <ToWithdrawModal isOpen={isWithdrawOpen} onClose={onWithdrawClose} total={balanceUSDC.total} client={client}/>
+        <ToWithdrawModal isOpen={isWithdrawOpen} onClose={onWithdrawClose} staked={balanceUSDC.staked} client={client}/>
         <ToStackModal isOpen={isStakeOpen} onClose={onStakeClose} available={balanceUSDC.available} client={client} />
         <ToWithdrawAllModal isOpen={isWithdrawAllOpen} onClose={onWithdrawAllClose} total={balanceUSDC.total} client={client}/>
         </Box>

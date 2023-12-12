@@ -1,4 +1,4 @@
-export const nftAddress = '0x43AF95a415Ca1f06B5505C2B87E90375d5A80252'
+export const nftAddress = '0x9eEE2D89c21174529D385dF491D94fDB3C0c50a1'
 export const nftABI =[
   {
     "inputs": [],
@@ -292,6 +292,19 @@ export const nftABI =[
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "Registered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "from",
@@ -419,25 +432,6 @@ export const nftABI =[
       }
     ],
     "name": "isApprovedForAll",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      }
-    ],
-    "name": "isDonors",
     "outputs": [
       {
         "internalType": "bool",

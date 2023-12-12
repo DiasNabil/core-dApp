@@ -1,1 +1,3 @@
-{}
+{
+  "/associations/dashboard/[id]/page": "app/associations/dashboard/[id]/page.js"
+}
