@@ -21,11 +21,13 @@ Portail reliant donateur - organisation - web3. L'objectif est de créer un cerc
 les tests unitaires sur sepolia coutant chère en gas, j'ai donc fait une copie du contrat avec la création d'un token ERC20 afin de tester ses principales fonctionnalités. 
 
 Contrats :
-- CoreLending contract:0x931A7028D24B0468a9b86c2f1d33f81A81D19a2c
-- CoreNFT contract:0x43AF95a415Ca1f06B5505C2B87E90375d5A80252
+- CoreLending contract: 0x4A78cF8090ea7CC1989fb785806e82661302bb13
+- CoreNFT contract: 0x9eEE2D89c21174529D385dF491D94fDB3C0c50a1
+
 - PoolAave contract: 0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951
-- aUSDC contract:0x16dA4541aD1807f4443d92D26044C1147406EB80
-- USDC contract:0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8
+- aUSDC contract: 0x16dA4541aD1807f4443d92D26044C1147406EB80
+
+- USDC contract: 0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8
 
 Déployé sur Sepolia
 Domaine: https://core-repo.vercel.app/
