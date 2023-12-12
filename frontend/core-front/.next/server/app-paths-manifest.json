@@ -1,7 +1,5 @@
 {
-  "/associations/dashboard/[id]/page": "app/associations/dashboard/[id]/page.js",
   "/page": "app/page.js",
   "/donate/[id]/page": "app/donate/[id]/page.js",
-  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/donate/[id]/payment/page": "app/donate/[id]/payment/page.js"
 }
