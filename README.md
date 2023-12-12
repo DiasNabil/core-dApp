@@ -16,6 +16,10 @@ Portail reliant donateur - organisation - web3. L'objectif est de créer un cerc
 - Côté donateur : Il sera possible de rechercher une organisation en particulier, de se renseigner, et s'il a une cause à cœur, il pourra faire un don directement en cryptomonnaie. Pour le test, les tokens disponibles sont : DAI, USDC, USDT, WETH, mais sur mainnet, les possibilités sont élargies.
 - Côté organisations : Elles peuvent accéder à un tableau de bord leur permettant de suivre l'historique de leurs dons et de leurs récompenses. La possibilité de mettre un montant dans le pool du smart contract et de le retirer est également envisagée. La possibilité de sortir du protocole est également envisagée, notamment via les services 'RAMP' ou 'mtPelerin'.
 
+### TEST UNITAIRE 
+<img width="446" alt="image" src="https://github.com/DiasNabil/core-repo/assets/103931817/9810d6df-5ca8-41ef-ac8d-b96d84375d42">
+les test unitaires sur sepolia coutant chère en gas, j'ai donc fait une copie du contrat avec la création d'un token ERC20 afin de tester ses principales fonctionnalités. 
+
 Contrats :
 - CoreLending contract:0x931A7028D24B0468a9b86c2f1d33f81A81D19a2c
 - CoreNFT contract:0x43AF95a415Ca1f06B5505C2B87E90375d5A80252
