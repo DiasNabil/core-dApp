@@ -17,7 +17,7 @@ Portail reliant donateur - organisation - web3. L'objectif est de créer un cerc
 - Côté organisations : Elles peuvent accéder à un tableau de bord leur permettant de suivre l'historique de leurs dons et de leurs récompenses. La possibilité de mettre un montant dans le pool du smart contract et de le retirer est également envisagée. La possibilité de sortir du protocole est également envisagée, notamment via les services 'RAMP' ou 'mtPelerin'.
 
 ### TEST UNITAIRE 
-<img width="446" alt="image" src="https://github.com/DiasNabil/core-repo/assets/103931817/9810d6df-5ca8-41ef-ac8d-b96d84375d42">
+<img width="446" alt="image" src="https://github.com/DiasNabil/core-repo/assets/103931817/9810d6df-5ca8-41ef-ac8d-b96d84375d42"> </br>
 les test unitaires sur sepolia coutant chère en gas, j'ai donc fait une copie du contrat avec la création d'un token ERC20 afin de tester ses principales fonctionnalités. 
 
 Contrats :
