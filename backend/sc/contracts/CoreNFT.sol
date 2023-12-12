@@ -20,24 +20,21 @@ contract CoreNFT is Ownable, ERC721URIStorage {
     event EtherDeposited(address sender, uint256 amount);
     event EtherWithdrawn(address addr, uint256 amount);
     event Mint(address addr, uint256 tokenId);
+    event Registered(address addr);
 
 
     constructor()ERC721("CORE NFT", "COR") Ownable(msg.sender) {}
 
     function approveDonors(address donors) external onlyOwner {
+        require(!hasDonate[donors], 'already registered');
         hasDonate[donors] = true;
     }
 
-    function isDonors(address addr) external view onlyOwner returns (bool) {
-        return hasDonate[addr];
-    }
-
-    function _baseURI() internal view virtual override returns (string memory) {
+    function _baseURI() onlyOwner internal view virtual override returns (string memory) {
         return '';//set tokenURI
     }
 
-    //le donateur a accées au mint chaque fois qu'il fait un don, 
-    //une fois le nft minter le status du donateur est revoquer
+ 
     function mint(string memory tokenURI) external onlyDonors {
         _tokenIds += 1;
 

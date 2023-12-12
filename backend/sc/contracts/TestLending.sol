@@ -17,8 +17,6 @@ contract TestLending is Ownable {
     }
 
     address tokenAddress;
-    address lendingTokenAddress;
-    address lendingPoolAddress;
 
     mapping(address => UserInfo) public userInfo;
 
@@ -77,18 +75,27 @@ contract TestLending is Ownable {
         require (amount > 0, "wrong amount");
         require (amount <= userInfo[msg.sender].depositedAmount+userInfo[msg.sender].userRewards, "amount too high");
         
-        IERC20(tokenAddress).transferFrom(address(this),msg.sender, amount);
+        IERC20(tokenAddress).transfer(msg.sender, amount);
 
-        userInfo[msg.sender].depositedAmount -= amount;
-        userInfo[msg.sender].userRewards = 0;
+
+        if(amount < userInfo[msg.sender].userRewards){
+            userInfo[msg.sender].userRewards -= amount;
+        }else {
+
+            userInfo[msg.sender].userRewards = 0;
+            userInfo[msg.sender].depositedAmount -= (amount-userInfo[msg.sender].userRewards);
+
+        }
+
         contractPool -= amount;
         emit Withdrawn(msg.sender, amount);
     }
 
     /// @dev par souci d'optimisation boucler en dehors du smart contract pour mettre les données constamment à jour ? 
     /// @param user adresse de l'utilisateur à mettre à jour
-    function updateInterest(address user) public onlyRegistered onlyOwner {
-        uint256 updatedPool = IERC20(lendingTokenAddress).balanceOf(address(this));
+    function updateInterest(address user) public {
+        require (userInfo[user].isRegistered || owner() == msg.sender || address(this) == msg.sender , "you can't !");
+        uint256 updatedPool = IERC20(tokenAddress).balanceOf(address(this));
         uint256 interestPool = updatedPool - contractPool;
 
         uint256 percentage = ((userInfo[user].depositedAmount + userInfo[user].userRewards) / contractPool) * 100;

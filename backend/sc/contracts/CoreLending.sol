@@ -63,10 +63,9 @@ contract CoreLending is Ownable {
     /// @param amount montant envoyé par l'utilisateur 
     function deposit(uint256 amount) external onlyRegistered {
         require (amount > 0, "wrong amount");
-        uint256 allowance = IERC20(tokenAddress).allowance(msg.sender, address(this));
-        require(allowance >= amount, "Check the token allowance");
-        //allowance a set coté front pour chaque utilisateur, au moment de l'inscription ? 
 
+        //allowance a set coté front pour chaque utilisateur, au moment de l'inscription ? 
+        //c'est le caller qui doit appeler la fonction approve manuellement 
         IERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
         IPool(lendingPoolAddress).supply(tokenAddress, amount, address(this), 0);
 
@@ -81,17 +80,27 @@ contract CoreLending is Ownable {
     function withdraw(uint256 amount) external onlyRegistered {
         require (amount > 0, "wrong amount");
         require (amount <= userInfo[msg.sender].depositedAmount+userInfo[msg.sender].userRewards, "amount too high");
+        
         IPool(lendingPoolAddress).withdraw(tokenAddress, amount, msg.sender);
 
-        userInfo[msg.sender].depositedAmount -= amount;
-        userInfo[msg.sender].userRewards = 0;
+
+        if(amount < userInfo[msg.sender].userRewards){
+            userInfo[msg.sender].userRewards -= amount;
+        }else {
+
+            userInfo[msg.sender].userRewards = 0;
+            userInfo[msg.sender].depositedAmount -= (amount-userInfo[msg.sender].userRewards);
+
+        }
+
         contractPool -= amount;
         emit Withdrawn(msg.sender, amount);
     }
 
     /// @dev par souci d'optimisation boucler en dehors du smart contract pour mettre les données constamment à jour ? 
     /// @param user adresse de l'utilisateur à mettre à jour
-    function updateInterest(address user) public onlyRegistered onlyOwner {
+    function updateInterest(address user) public {
+         require (userInfo[user].isRegistered || owner() == msg.sender || address(this) == msg.sender , "you can't !");
         uint256 updatedPool = IERC20(lendingTokenAddress).balanceOf(address(this));
         uint256 interestPool = updatedPool - contractPool;
 
