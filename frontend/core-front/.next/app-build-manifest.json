@@ -34,6 +34,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/associations/dashboard/[id]/template.js"
+    ],
+    "/donate/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/donate/[id]/page.js"
+    ],
+    "/donate/[id]/payment/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/donate/[id]/payment/page.js"
     ]
   }
 }

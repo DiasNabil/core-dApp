@@ -64,6 +64,8 @@ export default function ToRewardsModal({isOpen, onClose, rewards}){
         duration: '3000',
         status: 'error'
       })
+
+      setError(false)
     }
 
     if(isSuccess){
@@ -74,6 +76,7 @@ export default function ToRewardsModal({isOpen, onClose, rewards}){
         duration: '3000',
         status: 'success'
       })
+      setSuccess(false)
     }
   }, [isError, isSuccess])
 

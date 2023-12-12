@@ -6,18 +6,20 @@ import { tokens } from "@/helpers/tokens";
 import { Button } from "@chakra-ui/button";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import { useToast } from "@chakra-ui/toast";
-import { getAccount,  sendTransaction, waitForTransaction, writeContract } from "@wagmi/core";
+import { getAccount,  sendTransaction, waitForTransaction, writeContract, readContract } from "@wagmi/core";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { encodeFunctionData} from "viem";
 import { ownerClient } from "@/helpers/walletClient";
 
-export default function PaymentModal({isOpen, onClose, data}){
 
+export default function PaymentModal({isOpen, onClose, data}){
     const toast = useToast()
-    const toastRef = useRef()
     const account = getAccount()
     const [isLoading, setLoading] = useState(false)
+    const [isError, setError] = useState(false)
+    
+
     async function handleTx(){
       setLoading(true)
       const params = {
@@ -35,11 +37,6 @@ export default function PaymentModal({isOpen, onClose, data}){
         
         const url = process.env.NEXT_PUBLIC_0x_URL+'swap/v1/quote'
         
-        toastRef.current = toast({
-          title: 'Swap en cours...',
-          duration: 'null',
-          status: "info",
-        })
         if(data.token !== tokens[0]){
           console.log('swap en cours... ')
 
@@ -65,20 +62,17 @@ export default function PaymentModal({isOpen, onClose, data}){
     
               receipt && transferToken(swapQuote)
             }
+          }else{
+            setLoading(false)
+            console.log("le contrat n'a pas pu etre approuvé, veuillez réessayer")
+            
           }
         }else{
           transferToken()
         }
-      
-        
         async function transferToken (quote){
             
             const amount = quote? quote.data.buyAmount : params.sellAmount.toString()
-            toast.update(toastRef.current,{
-              title: 'Swap effectué, envoi du montant...',
-              status: "info",
-              duration: 'null'
-            })
             quote && console.log('swap effectuée', quote.data)
             console.log('envoi de la transaction...')
 
@@ -87,70 +81,115 @@ export default function PaymentModal({isOpen, onClose, data}){
                 abi: tokens[0].abi,
                 functionName: 'transfer',
                 args: [data.to, amount]
-            })
-            
-            
+            })   
 
-            if(transferData){
-              toast.update(toastRef.current,{
-                title: 'Transaction effectuée',
-                description: 'Merci pour votre generosité, vous receverez votre NFT sous un instant.',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-              })
+            if(transferData){    
               
-              //ajout whitelist 
-              const callData = encodeFunctionData({
+              //verif si whitelist
+              const isWhitelisted = await readContract({
+                address: nftAddress,
                 abi: nftABI,
-                functionName: 'approveDonors', 
+                functionName: 'hasDonate', 
                 args: [params.takerAddress]
               })
-              const request = await ownerClient.prepareTransactionRequest({
-                to: nftAddress,
-                data: callData
-              })
-  
-              const signature = await ownerClient.signTransaction(request)
-      
-              request.nonce += Math.trunc((Math.random() * 10))
-              const hash = await ownerClient.sendRawTransaction({ serializedTransaction: signature })
 
+              if(isWhitelisted){
+                //ajout whitelist 
+                const callData = encodeFunctionData({
+                  abi: nftABI,
+                  functionName: 'approveDonors', 
+                  args: [params.takerAddress]
+                })
+                console.log(callData, 'transaction effectué, ajout du donateur a la whitelist')
+                const request = await ownerClient.prepareTransactionRequest({
+                  to: nftAddress,
+                  data: callData
+                })
+                console.log(request, 'preparation de la transaction')
+    
+                const signature = await ownerClient.signTransaction(request)
+                console.log(signature, "signature de l'ajouta a la whitelist")
         
-              if(hash){
-                const whitelisted = await waitForTransaction({hash})
+                request.nonce += Math.trunc((Math.random() * 10))
+                const hash = await ownerClient.sendRawTransaction({ serializedTransaction: signature })
+                console.log(hash, 'ajout du donateur a la whitelist')
           
-                
-                if(whitelisted){
-                  console.log('transaction effectuée ! envoi du nft en cours ...')
-  
-                    const {hash: mint} = await writeContract({
-                      address: nftAddress,
-                      abi: nftABI,
-                      functionName: 'mint',
-                      args: [URI]
+                if(hash){
+                  const whitelisted = await waitForTransaction({hash})
+                  console.log(whitelisted, 'donateur ajouter')
+            
+                  
+                  if(whitelisted){
+                    console.log('transaction effectuée ! envoi du nft en cours ...')
+                    toast({
+                      title: `Transaction effectuée, envoi du NFT en cours...`,
+                      description: "Le montant a bien été retiré, patienter encore un peu pour votre NFT",
+                      isClosable: true,
+                      duration: '3000',
+                      status: 'success'
                     })
-                    
-                    if(mint){
-                      console.log('mint du nft...')
+    
+                      const {hash: mint} = await writeContract({
+                        address: nftAddress,
+                        abi: nftABI,
+                        functionName: 'mint',
+                        args: [URI]
+                      })
                       
-                      console.log('nft minter !', mint)
-                      setLoading(false)
-                      onClose()
-                    }
+                      if(mint){
+                        console.log('mint du nft...')
+                        
+                        console.log('nft minter !', mint)
+                        toast({
+                          title: `NFT minter...`,
+                          description: "Core vous remercie !",
+                          isClosable: true,
+                          duration: '3000',
+                          status: 'success'
+                        })
+                        setLoading(false)
+                        onClose()
+                      }
+                  }else{
+                    setError(true)
+                    console.log('vous avez deja recu un NFT !')
+                  }
+  
+  
+                }else{
+                  setError(true)
                 }
 
-
+              } else {
+                console.log('transaction effectué, merci a vous')
+                setLoading(false)
+                onClose()
               }
-            }       
+            }  else{
+              setError(true)
+            }     
         }
-
       }catch(e) {
         console.log('err')
       setLoading(false)
       return console.error(e)
       }
     }
+
+    useEffect(()=>{
+
+
+      if(isError){
+        toast({
+          title: `Une erreur est survenue`,
+          description: "Une erreur est survenue durant l'envoi du montant, veuillez réesayer",
+          isClosable: true,
+          duration: '3000',
+          status: 'error'
+        })
+        setError(false)
+      }
+    }, [isError])
 
 
 

@@ -64,6 +64,7 @@ export default function ToWithdrawModal({isOpen, onClose, staked}){
           duration: '3000',
           status: 'error'
         })
+        setError(false)
       }
 
       if(isSuccess){
@@ -74,6 +75,7 @@ export default function ToWithdrawModal({isOpen, onClose, staked}){
           duration: '3000',
           status: 'success'
         })
+        setSuccess(false)
       }
     }, [isError, isSuccess])
 
