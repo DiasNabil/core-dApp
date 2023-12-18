@@ -14,6 +14,7 @@ Dans un contexte de test de produit, en plus de la contrainte du temps, les info
 ### FRONTEND
 Portail reliant donateur - organisation - web3. L'objectif est de créer un cercle vertueux avec ces trois composantes pour lesquelles l'application a été conçue.
 - Côté donateur : Il sera possible de rechercher une organisation en particulier, de se renseigner, et s'il a une cause à cœur, il pourra faire un don directement en cryptomonnaie. Pour le test, les tokens disponibles sont : DAI, USDC, USDT, WETH, mais sur mainnet, les possibilités sont élargies.
+ - identitfiant ONG: test2@test.com   Mot de passe: 080697
 - Côté organisations : Elles peuvent accéder à un tableau de bord leur permettant de suivre l'historique de leurs dons et de leurs récompenses. La possibilité de mettre un montant dans le pool du smart contract et de le retirer est également envisagée. La possibilité de sortir du protocole est également envisagée, notamment via les services 'RAMP' ou 'mtPelerin'.
 
 ### TEST UNITAIRE 
