@@ -2,6 +2,7 @@ import { extendTheme, withDefaultProps } from "@chakra-ui/react";
 import "@fontsource/lexend"
 import "@fontsource/lalezar"
 
+
 const theme = extendTheme({
     fonts: {
         body: "Lexend",
